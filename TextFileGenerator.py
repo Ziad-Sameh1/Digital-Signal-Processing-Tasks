@@ -1,33 +1,37 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+file_path = '/home/ziad/PycharmProjects/taskOneDSP/signal1.txt'
 
-file_path='C:/Users/DELL/PycharmProjects\DSP_TASK1/signal1.txt'
 
 def read_signal(file_path):
     with open(file_path, 'r') as file:
-        samples = []
+        xPoints = []
+        yPoints = []
+        idx = 0
         for line in file:
+            idx = idx + 1
+            if idx <= 3: continue # skip the first three params
             values = line.strip().split(' ')
-            samples.extend([float(value) for value in values])
-    return samples
-
-def plot_continuous(signal):
-    plt.plot(signal)
-    plt.xlabel('Time')
-    plt.ylabel('Amplitude')
-    plt.title('Continuous Representation')
-    plt.show()
+            xPoints.append(float(values[0]))
+            yPoints.append(float(values[1]))
+    return (xPoints, yPoints)
 
 def plot_discrete(signal):
-    n = len(signal)
-    plt.stem(range(n), signal, use_line_collection=True)
-    plt.xlabel('Sample Index')
+    plt.stem(signal[0], signal[1])
+
+def plot_continuous(signal):
+    plt.plot(signal[0], signal[1], color="purple")
+
+
+def plot_both_signals(signal):
+    plot_continuous(signal)
+    plot_discrete(signal)
+    plt.xlabel('N')
     plt.ylabel('Amplitude')
-    plt.title('Discrete Representation')
     plt.show()
+
 
 def plot_cont_disc():
     signal = read_signal(file_path)
-    plot_continuous(signal)
-    plot_discrete(signal)
+    plot_both_signals(signal)
