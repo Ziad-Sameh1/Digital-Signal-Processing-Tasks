@@ -1,13 +1,13 @@
 import tkinter as tk
 import TextFileGenerator as txt
-import FormGenerator as form
+import Plotting as plot
 
 def sinusoidal():
-    form.plot_sinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
+    plot.plot_sinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
                          sfreq_value_input.get())
 
 def cosinusoidal():
-    form.plot_cosinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
+    plot.plot_cosinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
                          sfreq_value_input.get())
 
 # create color
@@ -59,7 +59,7 @@ sfreq_value_input.place(x=250, y=235)
 
 ##text file signal button
 submit_button = tk.Button(frame_body, text="Generate Text file Signal", bd=2, font="arial 10", fg="black", bg="silver",
-                          height=1, command=txt.plot_cont_disc)
+                          height=1, command=plot.plot_cont_disc)
 submit_button.place(x=170, y=360)
 
 ##sine signal generator button
