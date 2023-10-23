@@ -1,5 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import re
+from os.path import isfile, join
+
+from os import listdir
 
 file_path = '/home/ziad/PycharmProjects/taskOneDSP/signal1.txt'
 
@@ -11,27 +15,23 @@ def read_signal(file_path):
         idx = 0
         for line in file:
             idx = idx + 1
-            if idx <= 3: continue # skip the first three params
+            if idx <= 3: continue  # skip the first three params
             values = line.strip().split(' ')
             xPoints.append(float(values[0]))
             yPoints.append(float(values[1]))
-    return (xPoints, yPoints)
-
-def plot_discrete(signal):
-    plt.stem(signal[0], signal[1])
-
-def plot_continuous(signal):
-    plt.plot(signal[0], signal[1], color="purple")
+    return xPoints, yPoints
 
 
-def plot_both_signals(signal):
-    plot_continuous(signal)
-    plot_discrete(signal)
-    plt.xlabel('N')
-    plt.ylabel('Amplitude')
-    plt.show()
+def read_signals(folder_path):
+    signals = []
+    files = listdir(folder_path)
+    print(files)
+    for file in files:
+        if not isfile(join(folder_path, file)):
+            continue
+        l_file = file.lower()
+        match = re.findall("^signal\d+", l_file)
+        if len(match) != 0:
+            signals.append(read_signal(join(folder_path, file)))
 
-
-def plot_cont_disc():
-    signal = read_signal(file_path)
-    plot_both_signals(signal)
+    return signals
