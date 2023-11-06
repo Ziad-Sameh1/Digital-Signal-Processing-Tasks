@@ -5,7 +5,7 @@ from os.path import isfile, join
 
 from os import listdir
 
-file_path = '/home/ziad/PycharmProjects/taskOneDSP/signal1.txt'
+# file_path = '/home/ziad/PycharmProjects/taskOneDSP/signal1.txt'
 
 
 def read_signal(file_path):
@@ -25,7 +25,6 @@ def read_signal(file_path):
 def read_signals(folder_path):
     signals = []
     files = listdir(folder_path)
-    print(files)
     for file in files:
         if not isfile(join(folder_path, file)):
             continue
@@ -33,5 +32,4 @@ def read_signals(folder_path):
         match = re.findall("^signal\d+", l_file)
         if len(match) != 0:
             signals.append(read_signal(join(folder_path, file)))
-
     return signals
