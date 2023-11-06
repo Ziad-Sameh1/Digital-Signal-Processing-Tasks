@@ -8,8 +8,6 @@ from comparesignals import SignalSamplesAreEqual
 
 import numpy as np
 
-file_path='/home/ziad/DSP/Digital-Signal-Processing-Tasks/signal1.txt'
-
 def plot_sinusoidal(amp, phase, analog, sampling):
     plot_sinusoidal_continuous(amp, phase, analog, sampling)
 
@@ -59,11 +57,5 @@ def plot_both_signals(signal):
 
 
 def plot_cont_disc():
-    signal = txt.read_signal(file_path)
+    signal = read_signal(file_path)
     plot_both_signals(signal)
-
-def dsp_plot_continuous(signal):
-    plt.plot(signal[0], signal[1], color="purple")
-    plt.xlabel('N')
-    plt.ylabel('Amplitude')
-    plt.show()
