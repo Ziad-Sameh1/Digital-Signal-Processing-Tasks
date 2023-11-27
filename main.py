@@ -6,16 +6,19 @@ import TextFileGenerator as parser
 import Plotting as form
 from tkinter import ttk
 import operations as op
-# import quantization as quant
+import quantization as quant
 from tkinter.filedialog import askopenfilename
+
 
 def sinusoidal():
     form.plot_sinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
                          sfreq_value_input.get())
 
+
 def cosinusoidal():
     form.plot_cosinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
-                         sfreq_value_input.get())
+                           sfreq_value_input.get())
+
 
 # create color
 background_colour = '#000000'
@@ -25,7 +28,7 @@ f2 = '#ffffff'
 # window
 window = tk.Tk()
 window.title("")
-window.geometry('500x450')
+window.geometry('500x600')
 window.configure(bg=background_colour)
 
 # frames
@@ -164,8 +167,8 @@ def task2_form():
                             height=1, command=on_mult_button)
     mult_button.place(x=440, y=340)
 
-
 def task3_form():
+
     def on_plot_button_click():
         if n.get() == 'Number of Bits':
             signal = parser.read_signal("/home/ziad/DSP/Digital-Signal-Processing-Tasks/input/Quan1_input.txt")
@@ -203,11 +206,11 @@ def task3_form():
     num_value_input.pack()
     num_value_input.place(x=185, y=200)
 
+
     ##plot_quant##
     plot_quant_button = tk.Button(frame3_body, text="Plot", bd=2, font="arial 10", fg="black", bg="silver",
-                                  height=1, command=on_plot_button_click)
+                            height=1, command=on_plot_button_click)
     plot_quant_button.place(x=240, y=250)
-
 
 def task4_form():
     file_path = ""
@@ -225,6 +228,14 @@ def task4_form():
         signal = parser.read_signal(file_path)
         do_dft(signal)
 
+    def dct():
+        signal = parser.read_signal(file_path)
+        do_dct(signal)
+
+    def rmv_dct():
+        signal = parser.read_signal(file_path)
+        do_rmv_dct(signal)
+
     def idft():
         signal = parser.read_polar(polar_file_path)
         do_idft(signal)
@@ -239,10 +250,21 @@ def task4_form():
 
     def do_idft(signal):
         if index_value_input.get() != '' and int(index_value_input.get()) >= 0:
-            amp = FrequencyDomain.idft(signal, int(index_value_input.get()), int(amp_value_input.get()), float(phase_value_input.get()))
+            amp = FrequencyDomain.idft(signal, int(index_value_input.get()), int(amp_value_input.get()),
+                                       float(phase_value_input.get()))
         else:
             amp = FrequencyDomain.idft(signal)
         signal = (range(len(amp)), amp)
+        form.dsp_plot_discrete(signal)
+
+    def do_dct(signal):
+        signal = FrequencyDomain.dct(signal, m_value_input.get())
+        print(signal)
+        form.dsp_plot_discrete(signal)
+
+    def do_rmv_dct(signal):
+        signal = FrequencyDomain.rmv_dct(signal)
+        print(signal)
         form.dsp_plot_discrete(signal)
 
     # frames
@@ -263,44 +285,69 @@ def task4_form():
                                height=1,
                                command=load_polar)
     load_polar_btn.place(x=300, y=80)
+    
+    # num
+    m_value = tk.Label(frame4_body, text="Enter M", height=1, font=('Ivy 15 bold'), fg="maroon", bg=f2)
+    m_value.place(x=10, y=150)
+    m_value_input = tk.Entry(frame4_body, width=30)
+    m_value_input.pack()
+    m_value_input.place(x=260, y=150)
 
     # num
     freq_value = tk.Label(frame4_body, text="Enter Frequency(HZ)", height=1, font=('Ivy 15 bold'), fg="maroon", bg=f2)
-    freq_value.place(x=10, y=160)
+    freq_value.place(x=10, y=230)
     freq_value_input = tk.Entry(frame4_body, width=30)
     freq_value_input.pack()
-    freq_value_input.place(x=260, y=160)
+    freq_value_input.place(x=260, y=230)
 
     # dft button
     dft_button = tk.Button(frame4_body, text="DFT", bd=2, font="arial 10", fg="black", bg="beige", height=1,
                            command=dft)
-    dft_button.place(x=180, y=220)
+    dft_button.place(x=150, y=270)
 
     # idft button
     idft_button = tk.Button(frame4_body, text="IDFT", bd=2, font="arial 10", fg="black", bg="beige", height=1,
                             command=idft)
-    idft_button.place(x=270, y=220)
+    idft_button.place(x=220, y=270)
     
+    # dct button
+    dct_button = tk.Button(frame4_body, text="DCT", bd=2, font="arial 10", fg="black", bg="beige", height=1,
+                            command=dct)
+    dct_button.place(x=290, y=270)
+
+    # remove dct button
+    rmv_dct_button = tk.Button(frame4_body, text="Remove DCT", bd=2, font="arial 10", fg="black", bg="beige", height=1,
+                            command=rmv_dct)
+    rmv_dct_button.place(x=360, y=270)
+
     ##index##
     index_value = tk.Label(frame4_body, text="Enter Index", height=1, font=('Ivy 15 bold'), fg="maroon", bg=f2)
-    index_value.place(x=10, y=300)
+    index_value.place(x=10, y=350)
     index_value_input = tk.Entry(frame4_body, width=30)
     index_value_input.pack()
-    index_value_input.place(x=220, y=300)
-    
+    index_value_input.place(x=220, y=350)
+
     ##amp##
     amp_value = tk.Label(frame4_body, text="Enter Amplitude", height=1, font=('Ivy 15 bold'), fg="maroon", bg=f2)
-    amp_value.place(x=10, y=350)
+    amp_value.place(x=10, y=400)
     amp_value_input = tk.Entry(frame4_body, width=30)
     amp_value_input.pack()
-    amp_value_input.place(x=220, y=350)
-    
+    amp_value_input.place(x=220, y=400)
+
     ##phase##
     phase_value = tk.Label(frame4_body, text="Enter Phase", height=1, font=('Ivy 15 bold'), fg="maroon", bg=f2)
-    phase_value.place(x=10, y=400)
+    phase_value.place(x=10, y=450)
     phase_value_input = tk.Entry(frame4_body, width=30)
     phase_value_input.pack()
-    phase_value_input.place(x=220, y=400)
+    phase_value_input.place(x=220, y=450)
+
+
+task1_button = tk.Button(frame_body, text="Task1", bd=2, font="arial 10", fg="black", bg="beige", height=1,
+                         command=task1_form)
+task1_button.place(x=210, y=80)
+task2_button = tk.Button(frame_body, text="Task2", bd=2, font="arial 10", fg="black", bg="beige", height=1,
+                         command=task2_form)
+task2_button.place(x=210, y=120)
 
 task3_button = tk.Button(frame_body, text="Task3", bd=2, font="arial 10", fg="black", bg="beige", height=1,
                          command=task3_form)
@@ -311,4 +358,3 @@ task4_button = tk.Button(frame_body, text="Task4", bd=2, font="arial 10", fg="bl
 task4_button.place(x=210, y=200)
 
 window.mainloop()
-

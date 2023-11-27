@@ -1,5 +1,11 @@
 
-def SignalSamplesAreEqual(file_name,indices,samples):
+def SignalSamplesAreEqual(file_name,samples):
+    """
+    this function takes two inputs the file that has the expected results and your results.
+    file_name : this parameter corresponds to the file path that has the expected output
+    samples: this parameter corresponds to your results
+    return: this function returns Test case passed successfully if your results is similar to the expected output.
+    """
     expected_indices=[]
     expected_samples=[]
     with open(file_name, 'r') as f:

@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 
 import TextFileGenerator as txt
 
-from comparesignals import SignalSamplesAreEqual
-
 import numpy as np
 
 
