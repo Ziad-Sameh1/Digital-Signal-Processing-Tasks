@@ -60,9 +60,9 @@ def plot_cont_disc():
     plot_both_signals(signal)
 
 
-def dsp_plot_continuous(signal):
+def dsp_plot_continuous(signal, label='N'):
     plt.plot(signal[0], signal[1], color="purple")
-    plt.xlabel('N')
+    plt.xlabel(label)
     plt.ylabel('Amplitude')
     plt.show()
 

@@ -41,6 +41,25 @@ def idft(signal, idx=-1, new_amplitude=-1, new_phase=-1):
     return res / len(real)
 
 
+def v2_dft(signal):
+    N = len(signal)
+    dft_result = []
+    for k in range(N):
+        X_k = sum(signal[n] * cmath.exp(-2j * cmath.pi * k * n / N) for n in range(N))
+        dft_result.append(X_k)
+    return dft_result
+
+def v2_inverse_dft(dft_result):
+    N = len(dft_result)
+    signal = []
+    for n in range(N):
+        x_n = sum(X_k * cmath.exp(2j * cmath.pi * k * n / N) for k, X_k in enumerate(dft_result))
+        signal.append(x_n / N)
+    return signal
+
+
+
+
 def calc_dct_coeff(k, signal):
     y_k = 0
     x_n = signal[1]
