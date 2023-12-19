@@ -1,6 +1,7 @@
 import tkinter as tk
 
 import Convolution
+import Correlation
 import FrequencyDomain
 import Plotting as txt
 import TextFileGenerator as parser
@@ -11,16 +12,6 @@ import TimeDomain
 import operations as op
 import quantization as quant
 from tkinter.filedialog import askopenfilename
-
-
-def sinusoidal():
-    form.plot_sinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
-                         sfreq_value_input.get())
-
-
-def cosinusoidal():
-    form.plot_cosinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
-                           sfreq_value_input.get())
 
 
 # create color
@@ -43,6 +34,14 @@ title_region.place(x=155, y=10)
 
 
 def task1_form():
+    def sinusoidal():
+        form.plot_sinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
+                             sfreq_value_input.get())
+
+    def cosinusoidal():
+        form.plot_cosinusoidal(Amplitude_value_input.get(), theta_value_input.get(), Afreq_value_input.get(),
+                               sfreq_value_input.get())
+
     # frames
     frame1_body = tk.Frame(window, width=700, height=590, bg=f2)
     frame1_body.grid(row=1, column=0)
@@ -491,6 +490,51 @@ def task7_form():
                                 command=do_convolution)
     convolution_btn.place(x=200, y=150)
 
+def task8_form():
+    sig1_file_path = ""
+    sig2_file_path = ""
+
+    def load_sig1():
+        nonlocal sig1_file_path
+        sig1_file_path = askopenfilename()
+
+    def load_sig2():
+        nonlocal sig2_file_path
+        sig2_file_path = askopenfilename()
+
+    def do_convolution():
+        signal1 = parser.read_signal(sig1_file_path)
+        signal2 = parser.read_signal(sig2_file_path)
+
+        Correlation.cross_correlation(signal1, signal2)
+        # form.dsp_plot_discrete((x, y))
+
+    # frames
+    frame8_body = tk.Frame(window, width=800, height=590, bg=f2)
+    frame8_body.grid(row=1, column=0)
+
+    # frame body
+    title_region = tk.Label(frame8_body, text="Normalized Cross-Correlation", height=1, font=('Ivy 18 bold'), bg=f2)
+    title_region.place(x=50, y=10)
+
+    # load file button
+    load_sig1_btn = tk.Button(frame8_body, text="Load Signal 1", bd=2, font="arial 10", fg="black", bg="beige",
+                              height=1,
+                              command=load_sig1)
+    load_sig1_btn.place(x=120, y=80)
+
+    # load file button
+    load_sig2_btn = tk.Button(frame8_body, text="Load Signal 2", bd=2, font="arial 10", fg="black", bg="beige",
+                              height=1,
+                              command=load_sig2)
+    load_sig2_btn.place(x=280, y=80)
+
+    # load file button
+    convolution_btn = tk.Button(frame8_body, text="Do Correlation", bd=2, font="arial 10", fg="black", bg="beige",
+                                height=1,
+                                command=do_convolution)
+    convolution_btn.place(x=200, y=150)
+
 
 task1_button = tk.Button(frame_body, text="Task1", bd=2, font="arial 10", fg="black", bg="beige", height=1,
                          command=task1_form)
@@ -514,5 +558,9 @@ task6_button.place(x=210, y=240)
 task7_button = tk.Button(frame_body, text="Task7", bd=2, font="arial 10", fg="black", bg="beige", height=1,
                          command=task7_form)
 task7_button.place(x=210, y=240)
+
+task8_button = tk.Button(frame_body, text="Task8", bd=2, font="arial 10", fg="black", bg="beige", height=1,
+                         command=task8_form)
+task8_button.place(x=210, y=280)
 
 window.mainloop()

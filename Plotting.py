@@ -6,6 +6,8 @@ import TextFileGenerator as txt
 
 import numpy as np
 
+from Task1_Tests.comparesignals import SignalSamplesAreEqual
+
 
 def plot_sinusoidal(amp, phase, analog, sampling):
     plot_sinusoidal_continuous(amp, phase, analog, sampling)
